@@ -1,7 +1,7 @@
 
 
 terraform {
-  required_version = ">= 1.10.0"
+  required_version = ">= 1.9.0"
   required_providers {
     # tflint-ignore: terraform_unused_required_providers
     azurerm = {
@@ -15,10 +15,6 @@ terraform {
     time = {
       source  = "hashicorp/time"
       version = ">= 0.9.1"
-    }
-    null = {
-      source  = "hashicorp/null"
-      version = ">= 3.2.1"
     }
   }
 }
