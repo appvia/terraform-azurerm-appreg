@@ -4,6 +4,18 @@ variable "app_role_assignment_required" {
   default     = true
 }
 
+variable "azuread_api_permissions" {
+  description = "List of Azure AD API permissions to grant to the application."
+  type = map(object({
+    resource_app_id = string,
+    resource_access = map(object({
+      id   = string,
+      type = string
+    }))
+  }))
+  default = {}
+}
+
 variable "directory_roles" {
   type        = set(string)
   description = "Set of AzureAD directory role names to be assigned to the service principal."
