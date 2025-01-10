@@ -1,13 +1,19 @@
 
-# Azure App Registration Module
+# Terraform Azure Landing Zone Application Registration Module
 
 ## Description
 
 This repository deploys the Azure App Registrations and associated service principals for Landing Zones deployment.
 
 ## Usage
+This module provides the following functionality:
 
-TBC
+1. Creates an Azure AD Application.
+2. Configures Service Principal and its password.
+3. Manages API permissions for the application using required_resource_access.
+4. Handles password rotation using time_rotating resources.
+5. Assigns Directory Roles to the Service Principal.
+
 
 ## Update Documentation
 
