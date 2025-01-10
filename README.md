@@ -6,13 +6,39 @@
 This repository deploys the Azure App Registrations and associated service principals for Landing Zones deployment.
 
 ## Usage
-This module provides the following functionality:
+```hcl
+module "rbac" {
+  source  = "git::https://##GIT_REPO_BASE_URL##/##APPREG_MODULE_NAME##?ref=main"
+  
+  app_role_assignment_required      = true
+  name                              = "my-app"
+  tags = {
+    Environment = "Development"
+    Owner       = "App Team"
+    Project     = "Development"
+  }
+  azuread_api_permissions = {
+    "AzureStorage" = {
+      resource_app_id = "00000003-0000-0000-c000-000000000000"
+      resource_access = {
+        "Storage.BlobDataContributor" = {
+          id   = "7eae9352-a6b7-4c17-8281-7b6bde367d5b"
+          type = "Application"
+        }
+      }
+    }
+  }
 
-1. Creates an Azure AD Application.
-2. Configures Service Principal and its password.
-3. Manages API permissions for the application using required_resource_access.
-4. Handles password rotation using time_rotating resources.
-5. Assigns Directory Roles to the Service Principal.
+  password_policy = {
+    rotation = { days = 90 }
+  }
+
+  directory_roles = {
+    "GlobalAdmin" = "Company Administrator"
+  }
+}
+
+```
 
 
 ## Update Documentation
