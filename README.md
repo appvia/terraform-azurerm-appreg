@@ -15,35 +15,26 @@ This repository deploys the Azure App Registrations and associated service princ
 
 ## Usage
 ```hcl
-module "rbac" {
-  source  = "git::https://##GIT_REPO_BASE_URL##/##APPREG_MODULE_NAME##?ref=main"
-  
-  app_role_assignment_required      = true
-  name                              = "my-app"
-  tags = {
-    Environment = "Development"
-    Owner       = "App Team"
-    Project     = "Development"
-  }
+module "service_principal" {
+  source  = "appvia/appreg/azurerm"
+  version = "0.0.1"
+
+  name            = "id-alz-core"
   azuread_api_permissions = {
-    "AzureStorage" = {
-      resource_app_id = "00000003-0000-0000-c000-000000000000"
-      resource_access = {
-        "Storage.BlobDataContributor" = {
-          id   = "7eae9352-a6b7-4c17-8281-7b6bde367d5b"
-          type = "Application"
-        }
-      }
-    }
+    resource_name   = resource_name
+    resource_app_id = resources.resource_app_id
+    id              = resource.id
+    type            = resource.type
   }
-
-  password_policy = {
-    rotation = { days = 90 }
+  directory_roles = ["Groups Administrator", "Privileged Role Administrator"]
+  tags = {
+    WorkloadName        = "ALZ.Bootstrap"
+    DataClassification  = "General"
+    BusinessCriticality = "Mission-critical"
+    BusinessUnit        = "Platform Operations"
+    OperationsTeam      = "Platform Operations"
   }
-
-  directory_roles = {
-    "GlobalAdmin" = "Company Administrator"
-  }
+  tenant_id = "9a379f1e-50e4-4c7e-ae9b-6064db22e8dd"
 }
 
 ```
